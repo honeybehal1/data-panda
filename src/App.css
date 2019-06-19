@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+.header-logo{
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.grid-component{
+  background: #fff;
+}
