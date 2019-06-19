@@ -26,10 +26,6 @@ class Personal extends React.Component {
     this.setState({});
   }
 
-
-
-
-
   render() {
     const { classes, setValue, value } = this.state;
     return (

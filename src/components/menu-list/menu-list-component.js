@@ -7,109 +7,109 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 
-import { ContactPhone, LocationOn, map, size } from '../../utils/general-imports';
+import { ContactPhone, LocationOn, map, size, isEmpty } from '../../utils/general-imports';
 
 import {
     ExpandLess,
-
-    ExpandMore,
-
-} from '../../utils/general-imports'
-
-
-
-const useStyles = makeStyles(theme => ({
-    root: {
-        width: '100%',
-        maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    nested: {
-        paddingLeft: theme.spacing(4),
-    },
-}));
+    ExpandMore
+} from '../../utils/general-imports';
 
 class MenuList extends React.Component {
+    state = {
+        data:
+            [
+                {
+                    icon: "face",
+                    primaryText: "personal",
+                    isOpen: false,
+                    subMenu: [{
+                        icon: "person",
+                        primaryText: "Basic",
 
-    getMenuItem = (listItem = {}) => {
-        const { icon = '', primaryText, subMenu = [] } = listItem;
+                    },
+                    {
+                        icon: "contact_mail",
+                        primaryText: "Contact Information",
 
-        return (<div><ListItem button >
-            <ListItemIcon >
-                <i class="material-icons">{icon}</i>
-            </ListItemIcon>
-            <ListItemText primary={primaryText} />
-            {(size(subMenu) > 0) && this.getExpandIcon()}
-        </ListItem></div>)
+                    },
+                    {
+                        icon: "location_on",
+                        primaryText: "Address",
 
+                    }
+                    ]
+                },
+                {
+                    icon: "school",
+                    primaryText: "Educations",
+                    isOpen: false
+                },
+                {
+                    icon: "work",
+                    primaryText: "Professional",
+                    isOpen: false
+
+                }
+            ]
+    };
+    handleClick = item => {
+        const { data } = this.state;
+        const { type = '', index } = item;
+        debugger;
+        if (!isEmpty(type)) {
+            data[index]['isOpen'] = !data[index]['isOpen'];
+            this.setState({ data });
+        }
     }
 
-    getExpandIcon = () => {
-        const open = true;
-        return open ? <ExpandLess /> : < ExpandMore />;
+    getMenuItem = (listItem = {}, type = '', index) => {
+        const { icon = '', primaryText, subMenu = [], isOpen = false } = listItem;
+        return (
+            <div>
+                <ListItem button onClick={() => this.handleClick({ index, type })}>
+                    <ListItemIcon >
+                        <i class="material-icons">{icon}</i>
+                    </ListItemIcon>
+                    <ListItemText primary={primaryText} />
+                    {(size(subMenu) > 0) && this.getExpandIcon(isOpen)}
+                </ListItem>
+            </div>);
+    }
 
+    getExpandIcon = isOpen => {
+        return isOpen ? <ExpandLess /> : < ExpandMore />;
     }
 
     getMenu = () => {
-        return map(this.data, (listItem, index) => {
-            const { subMenu } = listItem;
+        return map(this.state.data, (listItem, index) => {
+            const { subMenu, isOpen = false } = listItem;
             return (<div>
                 {this.getMenuItem(listItem, 'menu', index)}
                 {size(subMenu) > 0 &&
-                    <Collapse in={false} timeout="auto" unmountOnExit >
+                    <Collapse in={isOpen} timeout="auto" unmountOnExit style={{ paddingLeft: "1rem" }}>
                         {map(subMenu, (subMenuItem) => { return this.getMenuItem(subMenuItem) })}
                     </Collapse>}
             </div>);
         });
     }
 
-    data =
-        [
-            {
-                icon: "face",
-                primaryText: "personal",
-                isOpen: false,
-                subMenu: [{
-                    icon: "starBorder",
-                    primaryText: "Basic",
 
-                }, ,
-                {
-                    icon: "Information",
-                    primaryText: "Contact Information",
-
-                },
-                {
-                    icon: "address",
-                    primaryText: "Address",
-
-                }
-                ]
-            },
-            {
-                icon: "school",
-                primaryText: "Educations"
-            },
-            {
-                icon: "work",
-                primaryText: "Professional",
-
-            }
-        ]
     render() {
+
         return (
-            <List component="nav"
+            <List
+                component="nav"
                 aria-labelledby="nested-list-subheader"
                 subheader={
                     <ListSubheader component="div" id="nested-list-subheader" > Your Profile </ListSubheader>
                 }
+                style={{ "background": "#fff" }}
+
             >
                 {this.getMenu()}
             </List >
         );
     }
-
-
 }
 
 export default MenuList;
