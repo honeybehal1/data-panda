@@ -1,4 +1,4 @@
-import { React, Grid, TextField, Typography, makeStyles } from '../../utils/general-imports';
+import { React, Grid, TextField, makeStyles } from '../../utils/general-imports';
 
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';

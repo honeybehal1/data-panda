@@ -1,6 +1,6 @@
 import {
     React
-} from '../../utils/general-imports'
+} from '../utils/general-imports'
 
 class ErrorBoundary extends React.Component {
     state = {
@@ -8,7 +8,7 @@ class ErrorBoundary extends React.Component {
     }
 
     componentDidCatch(err, info) {
-        console.log("error", err, info)
+        //  console.log("error", err, info)
         this.setState({ hasError: true });
     }
 

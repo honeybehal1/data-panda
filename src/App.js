@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, Container } from '../src/utils/general-imports';
 import './App.css';
 
 import Header from '../src/components/header/header';
@@ -8,36 +8,29 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
 const theme = createMuiTheme({
   palette: {
     primary: {
-        main: '#2196f3'
-      }
+      main: '#2196f3'
     }
-  },
+  }
+},
 )
-
-
-
-
-
 function App() {
 
   return (
     <React.Fragment >
       <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <Header/>
-    <Container maxWidth="lg" theme={theme}>
-    <div className="App">
-      
-      <AppBody></AppBody>
-    </div>
-    </Container>
-    </MuiThemeProvider>
-  </React.Fragment>
+        <CssBaseline />
+        <Header />
+        <Container maxWidth="lg" theme={theme}>
+          <div className="App">
+
+            <AppBody></AppBody>
+          </div>
+        </Container>
+      </MuiThemeProvider>
+    </React.Fragment>
 
 
   );

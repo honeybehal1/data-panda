@@ -1,14 +1,16 @@
-import {React,Router ,Container} from '../../utils/general-imports';
+import { React, Router, Container, ErrorBoundary } from '../../utils/general-imports';
 
 import Routes from "../../routes/routes";
 
 function AppBody() {
   return (
-    <Container >
-       <Router>
-        <Routes/>      
+    <ErrorBoundary>
+      <Container >
+        <Router>
+          <Routes />
         </Router>
-    </Container>
+      </Container>
+    </ErrorBoundary>
   );
 }
 

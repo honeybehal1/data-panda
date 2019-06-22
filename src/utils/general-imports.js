@@ -1,7 +1,8 @@
 //React 
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
-
+import { Route, BrowserRouter as Router, Switch, withRouter } from "react-router-dom";
+import { connect, Provider } from 'react-redux';
+import Immutable from 'immutable';
 
 
 //Material core
@@ -16,7 +17,10 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 //lodash
-import { map, size, isEmpty } from 'lodash';
+import { map, size, isEmpty, isEqual, result } from 'lodash';
+
+//Components
+import ErrorBoundary from '../components/error-boundary-component';
 
 export {
     React,
@@ -36,7 +40,12 @@ export {
     Box,
     Divider,
     RadioGroup,
-    Radio
+    Radio,
+    ErrorBoundary,
+    connect,
+    Provider,
+    withRouter,
+    Immutable    
 };
 
 
@@ -49,4 +58,4 @@ export {
 export { makeStyles };
 
 //export lodash
-export { map, size, isEmpty };
+export { map, size, isEmpty, isEqual, result };

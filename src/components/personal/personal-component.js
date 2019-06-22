@@ -1,10 +1,5 @@
 import { React, Grid, TextField, Box, Divider, Typography, FormControlLabel, RadioGroup, Radio, makeStyles } from '../../utils/general-imports';
 
-
-
-import ContactInformation from './contact-information-component';
-import AddressComponent from '../../components/address/address-component'
-
 class Personal extends React.Component {
   handleChange = (event) => {
 
@@ -45,12 +40,6 @@ class Personal extends React.Component {
           </Grid>
           <Grid direction="row" item xs={3}>
             <TextField label="Date Of Birth" margin="normal" fullWidth />
-          </Grid>
-          <Grid direction="row" container item xs={12} spacing={2}>
-            <ContactInformation />
-          </Grid>
-          <Grid direction="row" container item xs={12} spacing={2}>
-            <AddressComponent />
           </Grid>
         </Grid>
       </Box>)
