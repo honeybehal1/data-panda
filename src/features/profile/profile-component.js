@@ -9,8 +9,6 @@ import AddressComponent from '../../components/address/address-component'
 class Profile extends React.Component {
     _getDataComponent = () => {
         const { menuTypeSelected } = this.props;
-        console.log(menuTypeSelected);
-        debugger;
         switch (menuTypeSelected) {
             case 'basic':
                 return <Personal />

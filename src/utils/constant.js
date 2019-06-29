@@ -1,1 +1,0 @@
-export const LEFT_MENU = "LEFT_MENU";

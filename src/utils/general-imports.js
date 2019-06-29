@@ -22,6 +22,10 @@ import { map, size, isEmpty, isEqual, result } from 'lodash';
 //Components
 import ErrorBoundary from '../components/error-boundary-component';
 
+//http
+
+import { getData, postData } from './http';
+
 export {
     React,
     Route,
@@ -45,7 +49,9 @@ export {
     connect,
     Provider,
     withRouter,
-    Immutable    
+    Immutable,
+    getData,
+    postData
 };
 
 

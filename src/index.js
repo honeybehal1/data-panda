@@ -13,7 +13,7 @@ import 'material-design-icons/iconfont/material-icons.css'
 const middlewares = [thunk];
 const middlewareEnhancer = applyMiddleware(...middlewares);
 
-const store = createStore(rootReducer, {});
+const store = createStore(rootReducer, middlewareEnhancer);
 
 
 
