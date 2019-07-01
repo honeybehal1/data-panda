@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
+import { loadTranslations, setLocale, syncTranslationWithStore } from 'react-redux-i18n';
+import translationsObject from './utils/global/translations'
 
 import { render } from 'react-dom';
 import { createStore, applyMiddleware, compose } from 'redux'
@@ -13,7 +14,12 @@ import 'material-design-icons/iconfont/material-icons.css'
 const middlewares = [thunk];
 const middlewareEnhancer = applyMiddleware(...middlewares);
 
-const store = createStore(rootReducer, middlewareEnhancer);
+export const store = createStore(rootReducer, middlewareEnhancer);
+syncTranslationWithStore(store);
+store.dispatch(loadTranslations(translationsObject));
+store.dispatch(setLocale('en-Us'));
+
+
 
 
 

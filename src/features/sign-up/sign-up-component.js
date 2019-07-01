@@ -1,9 +1,10 @@
-import { React, Grid, connect, withRouter, TextField } from '../../utils/general-imports';
+import { React, Grid, connect, withRouter, TextField, translate } from '../../utils/general-imports';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { INPUT_TYPE } from '../../utils/constants';
+import { I18n, Translate } from 'react-redux-i18n';
 
 
 
@@ -95,8 +96,8 @@ class SignUp extends React.Component {
                   this._handleSignUp()
                 }}
               >
-                Sign Up
-          </Button>
+                {translate('common.sign-up')}
+              </Button>
 
             </form>
           </div>

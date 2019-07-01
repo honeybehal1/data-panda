@@ -1,6 +1,6 @@
 //React 
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch, withRouter } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, withRouter, Redirect } from "react-router-dom";
 import { connect, Provider } from 'react-redux';
 import Immutable from 'immutable';
 
@@ -17,10 +17,11 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 //lodash
-import { map, size, isEmpty, isEqual, result } from 'lodash';
+import { map, size, isEmpty, isEqual, result, join, isArray } from 'lodash';
 
 //Components
 import ErrorBoundary from '../components/error-boundary-component';
+import { translate } from '../utils/global/translate-utils';
 
 //http
 
@@ -51,7 +52,9 @@ export {
     withRouter,
     Immutable,
     getData,
-    postData
+    postData,
+    translate,
+    Redirect
 };
 
 
@@ -64,4 +67,4 @@ export {
 export { makeStyles };
 
 //export lodash
-export { map, size, isEmpty, isEqual, result };
+export { map, size, isEmpty, isEqual, result, join, isArray };

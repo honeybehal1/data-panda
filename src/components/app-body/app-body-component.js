@@ -1,16 +1,20 @@
 import { React, Router, Container, ErrorBoundary } from '../../utils/general-imports';
+import Header from '../header/header';
 
 import Routes from "../../routes/routes";
 
 function AppBody() {
   return (
     <ErrorBoundary>
-      <Container >
-        <Router>
+
+      <Router>
+        <Header />
+        <Container >
           <Routes />
-        </Router>
-      </Container>
-    </ErrorBoundary>
+        </Container>
+      </Router>
+
+    </ErrorBoundary >
   );
 }
 
