@@ -3,19 +3,32 @@ import Header from '../header/header';
 
 import Routes from "../../routes/routes";
 
-function AppBody() {
-  return (
-    <ErrorBoundary>
+class AppBody extends React.Component {
 
-      <Router>
-        <Header />
-        <Container >
-          <Routes />
-        </Container>
-      </Router>
+  componentWillReceiveProps() {
+    console.log("hekl");
+    this.props.history.listen((location, action) => {
+      if (location.pathname !== this.props.location.pathname) {
+        this.props.location.pathname = location.pathname;
+        this.forceUpdate();
+      }
+    });
+  }
 
-    </ErrorBoundary >
-  );
+  render() {
+    return (
+      <ErrorBoundary>
+
+        <Router>
+          <Header />
+          <Container >
+            <Routes />
+          </Container>
+        </Router>
+
+      </ErrorBoundary >
+    );
+  }
 }
 
 export default AppBody;

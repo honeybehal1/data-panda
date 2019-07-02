@@ -1,4 +1,4 @@
-import { React, connect, withRouter, isEqual, Redirect } from '../../utils/general-imports';
+import { React, connect, withRouter, isEqual, Redirect, Link } from '../../utils/general-imports';
 import AppBar from '@material-ui/core/AppBar';
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -13,15 +13,6 @@ class Header extends React.Component {
   state = {}
 
 
-  componentDidMount() {
-    let location = this.props.location.pathname;
-    if (isEqual(location, '/') || isEqual(location, '/signIn')) {
-      this.setState({ isSignIn: false })
-    } else {
-      this.setState({ isSignIn: true })
-    }
-  }
-
 
 
   setHeaderValue = () => {
@@ -35,11 +26,26 @@ class Header extends React.Component {
     }
   }
 
+  _getLink = () => {
+    let location = this.props.location.pathname;
+    let linkText = '';
+    let routeLink = ''
+    if (isEqual(location, '/') || isEqual(location, '/signIn')) {
+      linkText = 'Sign Up';
+      routeLink = 'signUp'
+
+    } else {
+      linkText = 'Sign In';
+      routeLink = 'signIn'
+
+
+    }
+    return (<Link to={routeLink}>{linkText}</Link>)
+
+  }
+
   render() {
-
     const { isSignIn } = this.state;
-    console.log(this.props.history);
-
 
     return (
       <div >
@@ -47,11 +53,8 @@ class Header extends React.Component {
           <Toolbar>
             <Container>
               <span className="header-logo">
-                Data Panda
               </span>
-              <Button onClick={() =>
-                this.setHeaderValue()
-              } color="inherit">{isSignIn ? 'sign Up' : 'Sign In'}</Button>
+              {this._getLink()}
             </Container>
           </Toolbar>
         </AppBar>

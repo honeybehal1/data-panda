@@ -6,19 +6,15 @@ import { store } from '../index';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     let isLogin = store.getState();
-    isLogin = isLogin.signUpReducer;
-    isLogin = isLogin.get('isUserLoggedIn');
-
-
+    isLogin = true;// isLogin.signUpReducer;
+    //  isLogin = isLogin.get('isUserLoggedIn');
 
     return (
 
-        // Show the component only when the user is logged in
-        // Otherwise, redirect the user to /signin page
-        <Route {...rest} render={props => (
+        <Route exact {...rest} render={props => (
             isLogin ?
                 <Component {...props} />
-                : <Redirect to="/signIn" />
+                : <Redirect exact to="/" />
         )} />
     );
 };

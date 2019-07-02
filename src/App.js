@@ -23,12 +23,12 @@ function App() {
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
 
-        
-          <div className="App">
 
-            <AppBody />
-          </div>
-     
+        <div className="App">
+
+          <AppBody />
+        </div>
+
       </MuiThemeProvider>
     </React.Fragment>
 

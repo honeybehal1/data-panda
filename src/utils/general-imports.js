@@ -1,12 +1,12 @@
 //React 
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch, withRouter, Redirect } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch, withRouter, Redirect, Link } from "react-router-dom";
 import { connect, Provider } from 'react-redux';
 import Immutable from 'immutable';
 
 
 //Material core
-import { Avatar, Button, Grid, Box, RadioGroup, FormControlLabel, Radio, CssBaseline, TextField, Checkbox, Link, Typography, Container, Divider } from '@material-ui/core/';
+import { Avatar, Button, Grid, Box, RadioGroup, FormControlLabel, Radio, CssBaseline, TextField, Checkbox, Typography, Container, Divider } from '@material-ui/core/';
 
 //Material Icons
 

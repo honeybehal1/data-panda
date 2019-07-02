@@ -109,6 +109,7 @@ class SignUp extends React.Component {
 const mapStateToProps = (state) => ({
   menuTypeSelected: state.signUpReducer.get('isUserLoggedIn')
 });
+
 const mapDispatchToProps = (dispatch) => ({
   signUp: data => signUp(dispatch, data)
 });
