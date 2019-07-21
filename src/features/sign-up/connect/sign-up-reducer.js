@@ -9,12 +9,13 @@ let InitilaData = {
 
 InitilaData = Immutable.fromJS(InitilaData)
 export default function signUpReducer(state = InitilaData, action) {
+    console.log("isUserSignedUp", action.data);
     const data = Immutable.fromJS(action.data);
     switch (action.type) {
         case 'SIGN_UP_REQUESTED':
-            return data.set('signUpRequested', data);
+            return state.set('signUpRequested', data);
         case 'SIGN_UP_RESPONDED':
-            return data.set('isUserLoggedIn', true);
+            return state.set('isUserLoggedIn', true);
     }
     return state;
 }

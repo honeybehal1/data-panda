@@ -9,7 +9,7 @@ import menuListReducer from './connect/menu-list-reducer';
 import setMenu from './connect/menu-list-actions';
 import { withRouter } from "react-router-dom";
 
-import {React, map, size, isEmpty, connect, result } from '../../utils/general-imports';
+import { React, map, size, isEmpty, connect, result } from '../../utils/general-imports';
 
 import {
     ExpandLess,
@@ -19,15 +19,15 @@ import {
 
 class MenuList extends React.Component {
     handleClick = item => {
-        let {leftMenuData} = this.props;
-         leftMenuData = result(leftMenuData,'toJS',[]);
+        let { leftMenuData } = this.props;
+        leftMenuData = result(leftMenuData, 'toJS', []);
         const { type = '', index,
-        subMenuItemType } = item;
+            subMenuItemType } = item;
         if (!isEmpty(type)) {
             leftMenuData[index]['isOpen'] = !leftMenuData[index]['isOpen'];
             this.props.setData(leftMenuData);
         }
-        if(!isEmpty(subMenuItemType)){
+        if (!isEmpty(subMenuItemType)) {
             this.props.setSubMenuType(subMenuItemType);
         }
     }
@@ -38,69 +38,69 @@ class MenuList extends React.Component {
         return (
             <div><ListItem button onClick={() => this.handleClick({ index, type, subMenuItemType })
             }><ListItemIcon>
-                <i class="material-icons" > {icon} </i>
-            </ListItemIcon>
-            < ListItemText primary={primaryText} />
-                        {(size(subMenu) > 0) && this.getExpandIcon(isOpen)}
-</ListItem>
-                    </div>);
-                    }
-                
-getExpandIcon = isOpen => {
-    return isOpen ? <ExpandLess /> : < ExpandMore />;
-                }
-                
-getMenu = () => {
-    let { leftMenuData } = this.props;
-     leftMenuData = result(leftMenuData,'toJS');
-     console.log(leftMenuData);
-    return map(leftMenuData, (listItem, index) => {
-        const {subMenu, isOpen = false } = listItem;
-        return (<div>
-            {this.getMenuItem({ listItem, type: 'menu', index })}
-            {
-                size(subMenu) > 0 &&
-                <Collapse in={isOpen} timeout="auto" unmountOnExit style={{ paddingLeft: "1rem" }
-                }>
-                    {map(subMenu, (subMenuItem) => { return this.getMenuItem({ listItem: subMenuItem, subMenuItemType: subMenuItem.type }) })
-                    }
-                </Collapse>}
+                    <i class="material-icons" > {icon} </i>
+                </ListItemIcon>
+                < ListItemText primary={primaryText} />
+                {(size(subMenu) > 0) && this.getExpandIcon(isOpen)}
+            </ListItem>
             </div>);
-                });
-            }
-                    
-                    
-render() {
+    }
 
-    return (
-        <List component="nav" aria-labelledby="nested-list-subheader" subheader={< ListSubheader component="div" id="nested-list-subheader" > Your Profile < /ListSubheader>
+    getExpandIcon = isOpen => {
+        return isOpen ? <ExpandLess /> : < ExpandMore />;
+    }
+
+    getMenu = () => {
+        let { leftMenuData } = this.props;
+        leftMenuData = result(leftMenuData, 'toJS');
+        console.log(leftMenuData);
+        return map(leftMenuData, (listItem, index) => {
+            const { subMenu, isOpen = false } = listItem;
+            return (<div>
+                {this.getMenuItem({ listItem, type: 'menu', index })}
+                {
+                    size(subMenu) > 0 &&
+                    <Collapse in={isOpen} timeout="auto" unmountOnExit style={{ paddingLeft: "1rem" }
+                    }>
+                        {map(subMenu, (subMenuItem) => { return this.getMenuItem({ listItem: subMenuItem, subMenuItemType: subMenuItem.type }) })
+                        }
+                    </Collapse>}
+            </div>);
+        });
+    }
+
+
+    render() {
+
+        return (
+            <List component="nav" aria-labelledby="nested-list-subheader" subheader={< ListSubheader component="div" id="nested-list-subheader" > Your Profile < /ListSubheader>
 } style = {{ "background": "#fff" }} >
     {this.getMenu()}
                             </List >
                                 );
                             }
-                        }
-                        
-                        
+}
+
+
 const mapStateToProps = (state) => {
 
     return {
-                                leftMenuData: state.menuListReducer.get('leftMenuData'),
-                                menuTypeSelected: state.menuListReducer.get('menuTypeSelected')
-                        }
-                    };
-                    
+        leftMenuData: state.menuListReducer.get('leftMenuData'),
+        menuTypeSelected: state.menuListReducer.get('menuTypeSelected')
+    }
+};
+
 const mapDispatchToProps = dispatch => ({
-                                setData: id =>      dispatch(setMenu (id)),
-                                setSubMenuType:subMenuType=> dispatch({type:'SUB_MENU_TYPE', data:subMenuType})
-                    
-                });
-                
-                
-                export default withRouter(
-                    connect(
-                        mapStateToProps,
-                        mapDispatchToProps
-                    )(MenuList));
-                
-                
+    setData: id => dispatch(setMenu(id)),
+    setSubMenuType: subMenuType => dispatch({ type: 'SUB_MENU_TYPE', data: subMenuType })
+
+});
+
+
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(MenuList));
+
+

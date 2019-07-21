@@ -1,4 +1,4 @@
-import { React, Container } from '../src/utils/general-imports';
+import { React, Container, Router } from '../src/utils/general-imports';
 import './App.css';
 
 import Header from '../src/components/header/header';
@@ -17,22 +17,15 @@ const theme = createMuiTheme({
 },
 )
 function App() {
-
   return (
-    <React.Fragment >
+    <Router >
       <MuiThemeProvider theme={theme}>
         <CssBaseline />
-
-
         <div className="App">
-
           <AppBody />
         </div>
-
       </MuiThemeProvider>
-    </React.Fragment>
-
-
+    </Router>
   );
 }
 

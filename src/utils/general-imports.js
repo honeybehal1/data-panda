@@ -1,12 +1,16 @@
 //React 
-import React from 'react';
+import React, { useReducer, useState } from 'react';
 import { Route, BrowserRouter as Router, Switch, withRouter, Redirect, Link } from "react-router-dom";
 import { connect, Provider } from 'react-redux';
 import Immutable from 'immutable';
 
 
 //Material core
-import { Avatar, Button, Grid, Box, RadioGroup, FormControlLabel, Radio, CssBaseline, TextField, Checkbox, Typography, Container, Divider } from '@material-ui/core/';
+import {
+    Avatar, Button, Grid, Box, RadioGroup, FormControlLabel, Radio, CssBaseline, TextField, Checkbox, Typography, Container, Divider, FormControl,
+    FormLabel
+} from '@material-ui/core/';
+import Autosuggest from 'react-autosuggest';
 
 //Material Icons
 
@@ -17,7 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 //lodash
-import { map, size, isEmpty, isEqual, result, join, isArray } from 'lodash';
+import { map, size, isEmpty, isEqual, result, join, isArray, concat } from 'lodash';
 
 //Components
 import ErrorBoundary from '../components/error-boundary-component';
@@ -54,7 +58,12 @@ export {
     getData,
     postData,
     translate,
-    Redirect
+    Redirect,
+    FormControl,
+    FormLabel,
+    Autosuggest,
+    useReducer,
+    useState
 };
 
 
@@ -67,4 +76,4 @@ export {
 export { makeStyles };
 
 //export lodash
-export { map, size, isEmpty, isEqual, result, join, isArray };
+export { map, size, isEmpty, isEqual, result, join, isArray, concat };

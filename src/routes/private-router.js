@@ -5,12 +5,8 @@ import { store } from '../index';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    let isLogin = store.getState();
-    isLogin = true;// isLogin.signUpReducer;
-    //  isLogin = isLogin.get('isUserLoggedIn');
-
+    let isLogin = true;
     return (
-
         <Route exact {...rest} render={props => (
             isLogin ?
                 <Component {...props} />

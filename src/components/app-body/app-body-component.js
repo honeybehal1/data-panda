@@ -6,7 +6,6 @@ import Routes from "../../routes/routes";
 class AppBody extends React.Component {
 
   componentWillReceiveProps() {
-    console.log("hekl");
     this.props.history.listen((location, action) => {
       if (location.pathname !== this.props.location.pathname) {
         this.props.location.pathname = location.pathname;

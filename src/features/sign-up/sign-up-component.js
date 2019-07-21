@@ -1,4 +1,6 @@
-import { React, Grid, connect, withRouter, TextField, translate } from '../../utils/general-imports';
+import { React, Grid, connect, withRouter, TextField, translate, isEqual, isEmpty, map, concat, join } from '../../utils/general-imports';
+import { isValidInput } from '../../utils/general-utils';
+import { MessageComponent } from '../../utils/general-components';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,9 +19,8 @@ const { EMAIL, PASSWORD, CONFIRM_PASSWORD } = INPUT_TYPE;
 
 class SignUp extends React.Component {
   state = {
-    email: '',
-    password: '',
-    confirmPassord: ''
+    email: "honey.behal@yahoo.com", password: '123', confirmPassword: '123',
+    isFormValid: true
   }
 
   _handleChange(data) {
@@ -29,18 +30,41 @@ class SignUp extends React.Component {
   }
 
   _handleSignUp() {
-    const { email, password } = this.state;
-    debugger
-    const user = { email, password }
-    this.props.signUp(user);
+    const { email, password, confirmPassword } = this.state;
+    const user = { email, password };
+    let isPasswordEqual = !isEmpty(password) && isEqual(password, confirmPassword);
+    let errorMessage = [];
+
+    let isFormValid = true;
+    if (!isPasswordEqual) {
+      isFormValid = false;
+      errorMessage = concat(errorMessage, "Password doesn't match");
+    }
+    if (!isValidInput(email).isValid) {
+      isFormValid = false;
+      errorMessage = concat(errorMessage, isValidInput(email).errorMessage);
+    }
+    this.setState({ errorMessage: join(errorMessage, ','), isFormValid });
+    isFormValid && this.props.signUp(user).then(() => {
+      let { isUserLoggedIn = false } = this.props;
+      if (isUserLoggedIn) {
+        this.props.history.push('/profile');
+      }
+    });
+  }
+
+  _handleClose = () => {
+    this.setState({ isFormValid: true });
   }
 
   render() {
-    const { email, password, confirmPassord } = this.state;
+    const { email, password, confirmPassword, errorMessage = '', isFormValid } = this.state;
+
     return (
       <Container component="main" maxWidth="xs">
         <div>
           <CssBaseline />
+          {!isFormValid ? (<MessageComponent props={{ message: `${errorMessage}`, variant: 'error', handleClose: this._handleClose }} />) : ''}
           <div >
             <Typography component="h1" variant="h5">
               Sign Up
@@ -79,7 +103,7 @@ class SignUp extends React.Component {
                 margin="normal"
                 required
                 fullWidth
-                value={confirmPassord}
+                value={confirmPassword}
                 label="Confirm Password"
                 type="password"
                 autoComplete="current-password"
@@ -107,7 +131,7 @@ class SignUp extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  menuTypeSelected: state.signUpReducer.get('isUserLoggedIn')
+  isUserLoggedIn: state.signUpReducer.get('isUserLoggedIn')
 });
 
 const mapDispatchToProps = (dispatch) => ({

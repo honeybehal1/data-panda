@@ -1,4 +1,4 @@
-import { React, Grid, TextField, makeStyles } from '../../utils/general-imports';
+import { React, Grid, TextField, makeStyles, withRouter, connect, useReducer, useState } from '../../utils/general-imports';
 
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
@@ -6,6 +6,14 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
+
+import { getGeoLocationList } from './connect/geo-location-action';
+import geoLocation from './connect/geo-location-reducer';
+let InitilaData = {
+    listOfCountries: [],
+    listOfState: [],
+    listOfCities: []
+};
 
 
 const suggestions = [
@@ -16,6 +24,7 @@ const suggestions = [
 ];
 
 function renderInputComponent(inputProps) {
+
     const { classes, inputRef = () => { }, ref, ...other } = inputProps;
 
     return (
@@ -66,7 +75,6 @@ function getSuggestions(value) {
             if (keep) {
                 count += 1;
             }
-
             return keep;
         });
 }
@@ -103,15 +111,17 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function GeoLocationSuggestions() {
+export default function GeoLocationSuggestions(props) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [state, setState] = React.useState({
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [state1, dispatch] = useReducer(geoLocation, InitilaData);
+
+    const [state, setState] = useState({
         single: '',
         popper: '',
     });
 
-    const [stateSuggestions, setSuggestions] = React.useState([]);
+    const [stateSuggestions, setSuggestions] = useState([]);
 
     const handleSuggestionsFetchRequested = ({ value }) => {
         setSuggestions(getSuggestions(value));
@@ -122,10 +132,7 @@ export default function GeoLocationSuggestions() {
     };
 
     const handleChange = name => (event, { newValue }) => {
-        setState({
-            ...state,
-            [name]: newValue,
-        });
+        getGeoLocationList();
     };
 
     const autosuggestProps = {
@@ -149,7 +156,7 @@ export default function GeoLocationSuggestions() {
                         label: 'Country',
                         placeholder: 'Search a country (start with a)',
                         value: state.single,
-                        onChange: handleChange('single'),
+                        onChange: handleChange('country'),
                     }}
                     theme={{
                         container: classes.container,
@@ -174,7 +181,7 @@ export default function GeoLocationSuggestions() {
                         label: 'State',
                         placeholder: 'Search a country (start with a)',
                         value: state.single,
-                        onChange: handleChange('single'),
+                        onChange: handleChange('state'),
                     }}
                     theme={{
                         container: classes.container,
@@ -195,11 +202,10 @@ export default function GeoLocationSuggestions() {
                     {...autosuggestProps}
                     inputProps={{
                         classes,
-
                         label: 'City',
                         placeholder: 'Search a country (start with a)',
                         value: state.single,
-                        onChange: handleChange('single'),
+                        onChange: handleChange('city'),
                     }}
                     theme={{
                         container: classes.container,
@@ -214,11 +220,25 @@ export default function GeoLocationSuggestions() {
                     )}
                 />
             </Grid>
-
-
-
         </>
 
 
     );
 }
+
+// const mapStateToProps = (state) => ({
+//     listOfCountries: state.geoLocation.get('listOfCountries'),
+//     listOfState: state.geoLocation.get('listOfState'),
+//     listOfCities: state.geoLocation.get('listOfCities')
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+//     getGeoLocationList: (data, type) => getGeoLocationList(dispatch, data, type)
+// });
+
+
+// export default withRouter(
+//     connect(
+//         mapStateToProps,
+//         mapDispatchToProps
+//     )(GeoLocationSuggestions));

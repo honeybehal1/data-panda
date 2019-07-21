@@ -12,21 +12,8 @@ import { Toolbar } from '@material-ui/core';
 class Header extends React.Component {
   state = {}
 
-
-
-
-  setHeaderValue = () => {
-    let location = this.props.location.pathname;
-    if (isEqual(location, '/') || isEqual(location, '/signIn')) {
-      this.props.history.push('/signUp');
-      this.setState({ isSignIn: false })
-    } else {
-      this.props.history.push('/signIn');
-      this.setState({ isSignIn: true })
-    }
-  }
-
   _getLink = () => {
+    const { isUserLoggedIn } = this.props;
     let location = this.props.location.pathname;
     let linkText = '';
     let routeLink = ''
@@ -36,12 +23,9 @@ class Header extends React.Component {
 
     } else {
       linkText = 'Sign In';
-      routeLink = 'signIn'
-
-
+      routeLink = 'signIn';
     }
-    return (<Link to={routeLink}>{linkText}</Link>)
-
+    return isUserLoggedIn ? '' : (<Link to={routeLink}>{linkText}</Link>);
   }
 
   render() {

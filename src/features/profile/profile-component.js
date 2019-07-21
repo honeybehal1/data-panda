@@ -12,11 +12,10 @@ class Profile extends React.Component {
         switch (menuTypeSelected) {
             case 'basic':
                 return <Personal />
-            case 'contact' :
-               return <ContactInformation />
-               case 'address' :
+            case 'contact':
+                return <ContactInformation />
+            case 'address':
                 return <AddressComponent />
-             
         }
     }
     render() {

@@ -4,14 +4,13 @@ export function getData(data) {
     return response.json();
   });
 }
-export function postData(body) {
+export function postData(body, url) {
 
-  return fetch(baseUrl + '/signUp', {
-    method: 'post', body: JSON.stringify(body),
+  return fetch(baseUrl + `/${url}`, {
+    method: 'post',
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(function (response) {
-    return response.json();
   });
 }
