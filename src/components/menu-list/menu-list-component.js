@@ -53,7 +53,6 @@ class MenuList extends React.Component {
     getMenu = () => {
         let { leftMenuData } = this.props;
         leftMenuData = result(leftMenuData, 'toJS');
-        console.log(leftMenuData);
         return map(leftMenuData, (listItem, index) => {
             const { subMenu, isOpen = false } = listItem;
             return (<div>

@@ -132,7 +132,8 @@ export default function GeoLocationSuggestions(props) {
     };
 
     const handleChange = name => (event, { newValue }) => {
-        getGeoLocationList();
+        debugger;
+        console.log(name);
     };
 
     const autosuggestProps = {
@@ -156,7 +157,7 @@ export default function GeoLocationSuggestions(props) {
                         label: 'Country',
                         placeholder: 'Search a country (start with a)',
                         value: state.single,
-                        onChange: handleChange('country'),
+                        onChange: handleChange('country')
                     }}
                     theme={{
                         container: classes.container,
