@@ -1,5 +1,6 @@
 import { React, Container, Router } from '../src/utils/general-imports';
 import './App.css';
+import './App.scss';
 
 import Header from '../src/components/header/header';
 import AppBody from './components/app-body/app-body-component';

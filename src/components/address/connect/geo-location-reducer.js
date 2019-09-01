@@ -9,11 +9,11 @@ InitilaData = Immutable.fromJS(InitilaData)
 export default function geoLocation(state = InitilaData, action) {
     const data = Immutable.fromJS(action.data);
     switch (action.type) {
-        case 'COUNTRY_LIST_RESPONDED':
+        case 'countries':
             return state.set('listOfCountries', data);
-        case 'STATE_LIST_RESPONDED':
+        case 'state':
             return state.set('listOfState', data);
-        case 'CITY_LIST_RESPONDED':
+        case 'city':
             return state.set('listOfCities', data);
     }
     return state;

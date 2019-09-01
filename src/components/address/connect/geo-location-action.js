@@ -1,11 +1,12 @@
-import { postData } from '../../../utils/general-imports';
+import { getData } from '../../../utils/general-imports';
+export const getGeoLocation = {
+    type: "getGeoLocation",
+    payload: true
+};
 
-export function getGeoLocationList(dispatch, signUp, type) {
-    dispatch({ type, data: [] });
-
-    return postData(signUp).then(data => {
-        dispatch({ type, data });
-        data = JSON.stringify(data);
-        return data;
+export const getGeoLocationList = (dispatch, data) => {
+    dispatch({ type: data.type });
+    return getData(data.data).then((geoLocation) => {
+        return dispatch({ type: data.type, data: geoLocation[0].countries })
     });
 }

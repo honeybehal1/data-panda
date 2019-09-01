@@ -1,6 +1,7 @@
 import { baseUrl } from './urls';
 export function getData(data) {
-  return fetch(baseUrl).then(function (response) {
+  return fetch(`${baseUrl}/${data}`).then(function (response) {
+    debugger;
     return response.json();
   });
 }

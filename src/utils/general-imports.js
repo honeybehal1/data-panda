@@ -1,5 +1,5 @@
 //React 
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { Route, BrowserRouter as Router, Switch, withRouter, Redirect, Link } from "react-router-dom";
 import { connect, Provider } from 'react-redux';
 import Immutable from 'immutable';
@@ -63,7 +63,8 @@ export {
     FormLabel,
     Autosuggest,
     useReducer,
-    useState
+    useState,
+    useEffect
 };
 
 

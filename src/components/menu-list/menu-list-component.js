@@ -72,12 +72,13 @@ class MenuList extends React.Component {
     render() {
 
         return (
-            <List component="nav" aria-labelledby="nested-list-subheader" subheader={< ListSubheader component="div" id="nested-list-subheader" > Your Profile < /ListSubheader>
-} style = {{ "background": "#fff" }} >
-    {this.getMenu()}
-                            </List >
-                                );
-                            }
+            <List component="nav" aria-labelledby="nested-list-subheader"
+                subheader={
+                    <ListSubheader component="div" id="nested-list-subheader" > My Profile </ListSubheader>
+                } style={{ "background": "#fff" }} >
+                {this.getMenu()}
+            </List>);
+    }
 }
 
 

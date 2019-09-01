@@ -25,7 +25,7 @@ export default function ContactInformation() {
   const isValid = () => {
     let isFormValid = true;
     let errorMessage = [];
-    if (!isValidInput(userData[PRIMARY_EMAIL_ID], 'email').isValid || (!isValidInput([SECONDARY_EMAIL_ID], 'email').isValid)) {
+    if (!isValidInput(userData[PRIMARY_EMAIL_ID], 'email').isValid || (!isValidInput(userData[SECONDARY_EMAIL_ID], 'email').isValid)) {
       isFormValid = false;
       errorMessage = concat(errorMessage, isValidInput(userData[PRIMARY_EMAIL_ID], 'email').errorMessage);
     }

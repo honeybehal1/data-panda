@@ -14,7 +14,7 @@ import 'material-design-icons/iconfont/material-icons.css'
 const middlewares = [thunk];
 const middlewareEnhancer = applyMiddleware(...middlewares);
 
-export const store = createStore(rootReducer, middlewareEnhancer);
+export const store = createStore(rootReducer, middlewareEnhancer, window.devToolsExtentions && window.devToolsExtentions());
 syncTranslationWithStore(store);
 store.dispatch(loadTranslations(translationsObject));
 store.dispatch(setLocale('en-Us'));
