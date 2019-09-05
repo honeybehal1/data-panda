@@ -33,7 +33,8 @@ export default function Personal() {
 
   return (
     <>
-      <Container className="dp-form-container">
+      <div className="dp-form-container">
+        <h2 className="dp-section-header">Basic Information</h2>
         <Row>
           <Col sm={3}> <Form.Label>First Name</Form.Label></Col>
           <Col sm={8}><Form.Control type="text" value={firstName} onChange={value => {
@@ -58,9 +59,7 @@ export default function Personal() {
             _handleChange({ type: DATE_OF_BIRTH, value })
           }} /></Col>
         </Row>
-
         <Row>
-
           <Col sm={3}> <Form.Check.Label>Gender</Form.Check.Label></Col>
           <Col sm={8}>
             <Form.Check type="radio" >
@@ -74,7 +73,6 @@ export default function Personal() {
           </Col>
         </Row>
         <Row>
-
           <Col sm={3}> <Form.Label>Date of Birth</Form.Label></Col>
           <Col sm={8}><Form.Control type="date" placeholder="name@example.com" value={dateOfBirth} fullWidth onChange={value => {
             _handleChange({ type: DATE_OF_BIRTH, value })
@@ -89,7 +87,7 @@ export default function Personal() {
             </ButtonGroup>
           </Col>
         </Row>
-      </Container>
+      </div>
 
 
       {/* <Box p='1rem'>

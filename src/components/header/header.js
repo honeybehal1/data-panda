@@ -32,18 +32,11 @@ class Header extends React.Component {
     const { isSignIn } = this.state;
 
     return (
-      <div >
-        <AppBar position="static" >
-          <Toolbar>
-            <Container>
-              <span className="header-logo">
-              </span>
-              {this._getLink()}
-            </Container>
-          </Toolbar>
-        </AppBar>
+      <div className="dp-header" >
+        <div className="container">
+          {this._getLink()}
+        </div>
       </div>
-
     )
   }
 }

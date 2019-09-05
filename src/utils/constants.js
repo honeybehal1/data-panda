@@ -16,5 +16,9 @@ export const INPUT_TYPE = {
     PRIMARY_PHONE_NUMBER: 'primaryPhoneNumber',
     SECONDARY_PHONE_NUMBER: 'secondaryPhoneNumber',
     SECONDARY_EMAIL_ID: 'secondaryEmailId',
-    PRIMARY_EMAIL_ID: 'primaryEmailId'
+    PRIMARY_EMAIL_ID: 'primaryEmailId',
+    HOUSE_NUMBER: 'houseNumber',
+    STREET_NUMBER: 'streetNumber',
+    AREA_NAME: 'areaName',
+    LAND_MARK: 'landMark'
 }

@@ -7,9 +7,11 @@ import parse from 'autosuggest-highlight/parse';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
+
 import { getGeoLocation } from './connect/geo-location-action';
 import geoLocation from './connect/geo-location-reducer';
 import { getGeoLocationList } from './connect/geo-location-action';
+import { DropdownButton, Col, Row, Dropdown, Form, ButtonGroup } from 'react-bootstrap';
 let InitilaData = {
     listOfCountries: [],
     listOfState: [],
@@ -122,10 +124,18 @@ function GeoLocationSuggestions(props) {
         state: '',
         city: ''
     }
-    const [countryStateCity, changeCountryStateCity] = useState(initialState);
+    let [countryStateCity, changeCountryStateCity] = useState(initialState);
 
     useEffect(() => {
         props.getGeoLocationList({ type: 'countries', data: 'countries' }).then(countries => {
+            const countriesData = map(countries.data, (country, index) => {
+                const { label, value } = country;
+                return (<option>{label}</option>);
+            });
+            countryStateCity = { ...countryStateCity, countries: countriesData }
+
+
+            changeCountryStateCity(countryStateCity);
 
         });
     }, []);
@@ -146,39 +156,37 @@ function GeoLocationSuggestions(props) {
     };
 
     const listOfCountries = result(props.listOfCountries, 'toJS', []);
-    const { countryValue, state, city } = countryStateCity;
+    const { countryValue, state, city, countries, pincode } = countryStateCity;
 
     return (
         <>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
-                <select value={countryValue} onChange={data => handleChange({ type: 'country', data })}>
-                    {map(listOfCountries, countryList => {
-                        const { value = '', label = '' } = countryList;
-                        return <option value={value}>{label}</option>
-                    })}
-                </select>
-            </Grid>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
-                <select value={state} onChange={data => handleChange({ type: 'state', data })}>
-                    {map(listOfCountries, stateList => {
-                        const { value = '', label = '' } = stateList;
-                        return <option value={value}>{label}</option>
-                    })}
-                </select>
+            <Row>
+                <Col sm={3}><label>Country</label></Col>
+                <Col sm={8}>
+                    <select className="form-control" onChange={data => handleChange({ type: 'country', data })}>{countries}</select>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}><label>State</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={state} onChange={data => handleChange({ type: 'state', data })}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}><label>City</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={city} onChange={data => handleChange({ type: 'city', data })} />
+                </Col>
 
-            </Grid>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
+            </Row>
+            <Row>
+                <Col sm={3}><label>Pincode</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={pincode} onChange={data => handleChange({ type: 'pincode', data })} />
+                </Col>
 
-                <select value={city} onChange={data => handleChange({ type: 'city',  data })}>
-                    {map(listOfCountries, cityList => {
-                        const { value = '', label = '' } = cityList;
-                        return <option value={value}>{label}</option>
-                    })}
-                </select>
-            </Grid>
+            </Row>
         </>
-
-
     );
 }
 

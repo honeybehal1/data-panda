@@ -20,12 +20,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <Router >
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="App">
-          <AppBody />
-        </div>
-      </MuiThemeProvider>
+      <div className="App container">
+        <AppBody />
+      </div>
     </Router>
   );
 }
