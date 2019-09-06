@@ -1,7 +1,8 @@
-import { React, Grid, TextField, Typography, useState, Button, postData, concat, join } from '../../utils/general-imports';
+import { React, Grid, TextField, Typography, useState, postData, concat, join } from '../../utils/general-imports';
 import { MessageComponent } from '../../utils/general-components';
 import { isValidInput } from '../../utils/general-utils';
 import { INPUT_TYPE } from '../../utils/constants';
+import { Container, Col, Row, Form, Button, ButtonGroup } from 'react-bootstrap';
 
 const {
   SECONDARY_PHONE_NUMBER, SECONDARY_EMAIL_ID,
@@ -25,7 +26,7 @@ export default function ContactInformation() {
   const isValid = () => {
     let isFormValid = true;
     let errorMessage = [];
-    if (!isValidInput(userData[PRIMARY_EMAIL_ID], 'email').isValid || (!isValidInput([SECONDARY_EMAIL_ID], 'email').isValid)) {
+    if (!isValidInput(userData[PRIMARY_EMAIL_ID], 'email').isValid || (!isValidInput(userData[SECONDARY_EMAIL_ID], 'email').isValid)) {
       isFormValid = false;
       errorMessage = concat(errorMessage, isValidInput(userData[PRIMARY_EMAIL_ID], 'email').errorMessage);
     }
@@ -48,37 +49,45 @@ export default function ContactInformation() {
 
   const { primaryEmailId = '', secondaryEmailId = '', primaryPhoneNumber = '', secondaryPhoneNumber = '', errorMessage = '', isFormValid = true } = userData;
   return (
-    <Grid direction="row" container item xs={12} spacing={2} >
-      <Grid direction="row" container item xs={12}>
-        <Typography >Contact Information</Typography>
-      </Grid>
+    <div className="dp-form-container">
+      <h2 className="dp-section-header">Contact Information</h2>
       {!isFormValid ? (<MessageComponent props={{ message: `${errorMessage}`, variant: 'error', handleClose: _handleClose }} />) : ''}
-      <Grid direction="row" item xs={3}>
-        <TextField label="Email" margin="normal" fullWidth value={primaryEmailId} onChange={value => {
+      <Row>
+        <Col sm={3}> <Form.Label>Email</Form.Label></Col>
+        <Col sm={8}><Form.Control type="text" value={primaryEmailId} onChange={value => {
           _handleChange({ type: PRIMARY_EMAIL_ID, value })
-        }} />
-      </Grid>
-      <Grid direction="row" item xs={3}>
-        <TextField label="Secondary Email" margin="normal" value={secondaryEmailId} fullWidth onChange={value => {
+        }} /></Col>
+      </Row>
+      <Row>
+        <Col sm={3}> <Form.Label>Secondary Email</Form.Label></Col>
+        <Col sm={8}><Form.Control type="text" value={secondaryEmailId} onChange={value => {
           _handleChange({ type: SECONDARY_EMAIL_ID, value })
-        }} />
-      </Grid>
-      <Grid direction="row" item xs={3}>
-        <TextField label="Phone Number" margin="normal" fullWidth value={primaryPhoneNumber} onChange={value => {
+        }} /></Col>
+      </Row>
+      <Row>
+        <Col sm={3}> <Form.Label>Primary Phone Number</Form.Label></Col>
+        <Col sm={8}><Form.Control type="text" value={primaryPhoneNumber} onChange={value => {
           _handleChange({ type: PRIMARY_PHONE_NUMBER, value })
-        }} />
-      </Grid>
-      <Grid direction="row" item xs={3}>
-        <TextField label="Secondary Number" value={secondaryPhoneNumber} margin="normal" fullWidth onChange={value => {
+        }} /></Col>
+      </Row>
+      <Row>
+        <Col sm={3}> <Form.Label>Primary Phone Number</Form.Label></Col>
+        <Col sm={8}><Form.Control type="text" value={secondaryPhoneNumber} onChange={value => {
           _handleChange({ type: SECONDARY_PHONE_NUMBER, value })
-        }} />
-      </Grid>
-      <Grid>
-        <Button variant="contained" color="primary" onClick={() => _onSave()} className={classes.button}>
-          Save
+        }} /></Col>
+      </Row>
+      <Row>
+        <Col sm={12}>
+          <Button variant="contained" color="primary" onClick={() => _onSave()} className={classes.button}>
+            Save
       </Button>
-      </Grid>
-    </Grid>)
+        </Col>
+      </Row>
+    </div>
+
+
+
+  )
 
 }
 

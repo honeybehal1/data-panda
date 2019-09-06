@@ -32,6 +32,7 @@ class MenuList extends React.Component {
         }
     }
 
+
     getMenuItem = data => {
         const { index, listItem, type, subMenuItemType } = data
         const { icon = '', primaryText, subMenu = [], isOpen = false } = listItem;
@@ -72,12 +73,15 @@ class MenuList extends React.Component {
     render() {
 
         return (
-            <List component="nav" aria-labelledby="nested-list-subheader" subheader={< ListSubheader component="div" id="nested-list-subheader" > Your Profile < /ListSubheader>
-} style = {{ "background": "#fff" }} >
-    {this.getMenu()}
-                            </List >
-                                );
-                            }
+            <div className='dp-bg-white dp-form-container' >
+                <h2 className="dp-section-header">My Profile </h2>
+                <List component="nav" aria-labelledby="nested-list-subheader"
+                    subheader={
+                        ""
+                    } style={{ "background": "#fff" }} >
+                    {this.getMenu()}
+                </List></div>);
+    }
 }
 
 

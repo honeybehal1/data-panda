@@ -3,6 +3,8 @@ import { React, Grid, Box, connect, withRouter } from '../../utils/general-impor
 import MenuList from '../../components/menu-list/menu-list-component';
 import Personal from '../../components/personal/personal-component';
 
+import { Container, Col, Row } from 'react-bootstrap';
+
 import ContactInformation from '../../components/personal/contact-information-component'
 import AddressComponent from '../../components/address/address-component'
 
@@ -20,14 +22,19 @@ class Profile extends React.Component {
     }
     render() {
         return (
-            <Box mx="auto" mt='5rem'>
-                <Grid container p="2rem" >
-                    <Grid direction="row" p="2rem" item xs={4}> <MenuList /></Grid>
-                    <Grid direction="row" className='grid-component' xs={8}>
-                        {this._getDataComponent()}
-                    </Grid>
-                </Grid>
-            </Box>)
+
+            <div className="dp-body-container">
+                <Row>
+                    <Col item sm={4}>
+                        <Container> <MenuList /></Container> </Col>
+                    <Col sm={8}>
+                        <div className="dp-bg-white">
+                            {this._getDataComponent()}
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        )
     }
 }
 

@@ -1,5 +1,6 @@
 import { React, Container, Router } from '../src/utils/general-imports';
 import './App.css';
+import './App.scss';
 
 import Header from '../src/components/header/header';
 import AppBody from './components/app-body/app-body-component';
@@ -19,12 +20,9 @@ const theme = createMuiTheme({
 function App() {
   return (
     <Router >
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="App">
-          <AppBody />
-        </div>
-      </MuiThemeProvider>
+      <div className="App container">
+        <AppBody />
+      </div>
     </Router>
   );
 }

@@ -20,9 +20,9 @@ class AppBody extends React.Component {
 
         <Router>
           <Header />
-          <Container >
-            <Routes />
-          </Container>
+
+          <Routes />
+
         </Router>
 
       </ErrorBoundary >

@@ -1,4 +1,4 @@
-import { React, Grid, TextField, makeStyles, withRouter, connect, useReducer, useState } from '../../utils/general-imports';
+import { React, Grid, TextField, makeStyles, withRouter, connect, useReducer, useState, useEffect, result, map } from '../../utils/general-imports';
 
 import deburr from 'lodash/deburr';
 import Autosuggest from 'react-autosuggest';
@@ -7,8 +7,11 @@ import parse from 'autosuggest-highlight/parse';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { getGeoLocationList } from './connect/geo-location-action';
+
+import { getGeoLocation } from './connect/geo-location-action';
 import geoLocation from './connect/geo-location-reducer';
+import { getGeoLocationList } from './connect/geo-location-action';
+import { DropdownButton, Col, Row, Dropdown, Form, ButtonGroup } from 'react-bootstrap';
 let InitilaData = {
     listOfCountries: [],
     listOfState: [],
@@ -111,135 +114,95 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function GeoLocationSuggestions(props) {
+function GeoLocationSuggestions(props) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [state1, dispatch] = useReducer(geoLocation, InitilaData);
+    const initialState = {
+        state: [],
+        countries: [],
+        city: [],
+        countryValue: '',
+        state: '',
+        city: ''
+    }
+    let [countryStateCity, changeCountryStateCity] = useState(initialState);
 
-    const [state, setState] = useState({
-        single: '',
-        popper: '',
-    });
+    useEffect(() => {
+        props.getGeoLocationList({ type: 'countries', data: 'countries' }).then(countries => {
+            const countriesData = map(countries.data, (country, index) => {
+                const { label, value } = country;
+                return (<option>{label}</option>);
+            });
+            countryStateCity = { ...countryStateCity, countries: countriesData }
 
-    const [stateSuggestions, setSuggestions] = useState([]);
 
-    const handleSuggestionsFetchRequested = ({ value }) => {
-        setSuggestions(getSuggestions(value));
+            changeCountryStateCity(countryStateCity);
+
+        });
+    }, []);
+
+    const handleChange = value => {
+        let { data, type } = value;
+
+        changeCountryStateCity({ ...countryStateCity, [type]: data });
+        if (type === 'country') {
+            data = countryStateCity.country;
+        }
+        else if (type === 'state') {
+            data = countryStateCity.city;
+        }
+        // props.getGeoLocationList({ type, data }).then(geoLocation => {
+
+        // });
     };
 
-    const handleSuggestionsClearRequested = () => {
-        setSuggestions([]);
-    };
-
-    const handleChange = name => (event, { newValue }) => {
-        debugger;
-        console.log(name);
-    };
-
-    const autosuggestProps = {
-        renderInputComponent,
-        suggestions: stateSuggestions,
-        onSuggestionsFetchRequested: handleSuggestionsFetchRequested,
-        onSuggestionsClearRequested: handleSuggestionsClearRequested,
-        getSuggestionValue,
-        renderSuggestion,
-    };
+    const listOfCountries = result(props.listOfCountries, 'toJS', []);
+    const { countryValue, state, city, countries, pincode } = countryStateCity;
 
     return (
         <>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
+            <Row>
+                <Col sm={3}><label>Country</label></Col>
+                <Col sm={8}>
+                    <select className="form-control" onChange={data => handleChange({ type: 'country', data })}>{countries}</select>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}><label>State</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={state} onChange={data => handleChange({ type: 'state', data })}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}><label>City</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={city} onChange={data => handleChange({ type: 'city', data })} />
+                </Col>
 
-                <Autosuggest
-                    {...autosuggestProps}
-                    inputProps={{
-                        classes,
+            </Row>
+            <Row>
+                <Col sm={3}><label>Pincode</label></Col>
+                <Col sm={8}>
+                    <Form.Control className="form-control" value={pincode} onChange={data => handleChange({ type: 'pincode', data })} />
+                </Col>
 
-                        label: 'Country',
-                        placeholder: 'Search a country (start with a)',
-                        value: state.single,
-                        onChange: handleChange('country')
-                    }}
-                    theme={{
-                        container: classes.container,
-                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                        suggestionsList: classes.suggestionsList,
-                        suggestion: classes.suggestion,
-                    }}
-                    renderSuggestionsContainer={options => (
-                        <Paper {...options.containerProps} square>
-                            {options.children}
-                        </Paper>
-                    )}
-                />
-            </Grid>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
-
-                <Autosuggest
-                    {...autosuggestProps}
-                    inputProps={{
-                        classes,
-
-                        label: 'State',
-                        placeholder: 'Search a country (start with a)',
-                        value: state.single,
-                        onChange: handleChange('state'),
-                    }}
-                    theme={{
-                        container: classes.container,
-                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                        suggestionsList: classes.suggestionsList,
-                        suggestion: classes.suggestion,
-                    }}
-                    renderSuggestionsContainer={options => (
-                        <Paper {...options.containerProps} square>
-                            {options.children}
-                        </Paper>
-                    )}
-                />
-            </Grid>
-            <Grid direction="row" item xs={3} style={{ marginTop: '1rem' }}>
-
-                <Autosuggest
-                    {...autosuggestProps}
-                    inputProps={{
-                        classes,
-                        label: 'City',
-                        placeholder: 'Search a country (start with a)',
-                        value: state.single,
-                        onChange: handleChange('city'),
-                    }}
-                    theme={{
-                        container: classes.container,
-                        suggestionsContainerOpen: classes.suggestionsContainerOpen,
-                        suggestionsList: classes.suggestionsList,
-                        suggestion: classes.suggestion,
-                    }}
-                    renderSuggestionsContainer={options => (
-                        <Paper {...options.containerProps} square>
-                            {options.children}
-                        </Paper>
-                    )}
-                />
-            </Grid>
+            </Row>
         </>
-
-
     );
 }
 
-// const mapStateToProps = (state) => ({
-//     listOfCountries: state.geoLocation.get('listOfCountries'),
-//     listOfState: state.geoLocation.get('listOfState'),
-//     listOfCities: state.geoLocation.get('listOfCities')
-// });
+const mapStateToProps = (state) => ({
+    listOfCountries: state.geoLocation.get('listOfCountries'),
+    listOfState: state.geoLocation.get('listOfState'),
+    listOfCities: state.geoLocation.get('listOfCities')
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//     getGeoLocationList: (data, type) => getGeoLocationList(dispatch, data, type)
-// });
+const mapDispatchToProps = (dispatch) => ({
+    getGeoLocationList: (data, type) => getGeoLocationList(dispatch, data, type)
+});
 
 
-// export default withRouter(
-//     connect(
-//         mapStateToProps,
-//         mapDispatchToProps
-//     )(GeoLocationSuggestions));
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(GeoLocationSuggestions));

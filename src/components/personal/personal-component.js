@@ -1,16 +1,13 @@
-import { React, Grid, TextField, Box, Typography, FormControlLabel, RadioGroup, Button, Radio, makeStyles,postData, FormControl, FormLabel, useState } from '../../utils/general-imports';
+import { React, postData, FormControl, FormLabel, useState } from '../../utils/general-imports';
 import { INPUT_TYPE } from '../../utils/constants';
+import { Container, Col, Row, Form, Button, ButtonGroup } from 'react-bootstrap';
 const {
   FIRST_NAME,
   MIDDLE_NAME,
   LAST_NAME,
   DATE_OF_BIRTH,
   GENDER,
-  CITY_OF_BIRTH,
-  STATE_OF_BIRTH,
-  COUNTRY_OF_BIRTH,
-  NATIONALITY,
-  DIFFERENTLY_ABLED
+  NATIONALITY
 } = INPUT_TYPE;
 export default function Personal() {
 
@@ -30,67 +27,129 @@ export default function Personal() {
     middleName = '',
     lastName = '',
     dateOfBirth = '',
-    cityOfBirth = '',
-    stateOfBirth = '',
-    countryOfBirth = '',
+
     nationality = '', } = userData;
 
 
   return (
-    <Box p='1rem'>
-      <Grid direction="row" container item xs={12}>
-        <Typography variant="h5">Personal Information</Typography>
-      </Grid>
-      <Grid direction="row" container item xs={12} alignItems="flex-start" spacing={2}>
-        <Grid direction="row" item xs={4}>
-          <TextField label="Name" margin="normal" fullWidth value={firstName} onChange={value => {
+    <>
+      <div className="dp-form-container">
+        <h2 className="dp-section-header">Basic Information</h2>
+        <Row>
+          <Col sm={3}> <Form.Label>First Name</Form.Label></Col>
+          <Col sm={8}><Form.Control type="text" value={firstName} onChange={value => {
             _handleChange({ type: FIRST_NAME, value })
-          }} />
-        </Grid>
-        <Grid direction="row" item xs={4}>
-          <TextField label="Middle Name" margin="normal" value={middleName} fullWidth onChange={value => {
+          }} /></Col>
+        </Row>
+        <Row>
+          <Col sm={3}> <Form.Label>Middle Name</Form.Label></Col>
+          <Col sm={8}><Form.Control type="text" value={middleName} fullWidth onChange={value => {
             _handleChange({ type: MIDDLE_NAME, value })
-          }} />
-        </Grid>
-        <Grid direction="row" item xs={4}>
-          <TextField label="Last Name" margin="normal" value={lastName} fullWidth onChange={value => {
+          }} /></Col>
+        </Row>
+        <Row>
+          <Col sm={3}> <Form.Label>Last Name</Form.Label></Col>
+          <Col sm={8}><Form.Control type="email" value={lastName} fullWidth onChange={value => {
             _handleChange({ type: LAST_NAME, value })
-          }} />
-        </Grid>
-        <Grid direction="row" item xs={3}>
-          <TextField type="date" margin="normal" value={dateOfBirth} fullWidth onChange={value => {
+          }} /></Col>
+        </Row>
+        <Row>
+          <Col sm={3}> <Form.Label>Date of Birth</Form.Label></Col>
+          <Col sm={8}><Form.Control type="date" value={dateOfBirth} fullWidth onChange={value => {
             _handleChange({ type: DATE_OF_BIRTH, value })
-          }} />
+          }} /></Col>
+        </Row>
+        <Row>
+          <Col sm={3}> <Form.Check.Label>Gender</Form.Check.Label></Col>
+          <Col sm={8}>
+            <Form.Check type="radio" >
+              <Form.Check.Input type="radio" />
+              <Form.Check.Label>Male</Form.Check.Label>
+              <Form.Check.Input type="radio" />
+              <Form.Check.Label>Female</Form.Check.Label>
+              <Form.Check.Input type="radio" />
+              <Form.Check.Label>Other</Form.Check.Label>
+            </Form.Check>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={3}> <Form.Label>Date of Birth</Form.Label></Col>
+          <Col sm={8}><Form.Control type="date" placeholder="name@example.com" value={dateOfBirth} fullWidth onChange={value => {
+            _handleChange({ type: DATE_OF_BIRTH, value })
+          }} /></Col>
+        </Row>
+        <Row>
+          <Col sm={12}>
+            <ButtonGroup aria-label="Basic example">
+
+              <Button variant="secondary">Cancel</Button>
+              <Button>Save</Button>
+            </ButtonGroup>
+          </Col>
+        </Row>
+      </div>
+
+
+      {/* <Box p='1rem'>
+        <Grid container item sm={12}>
+          <Typography variant="h5">Personal Information</Typography>
         </Grid>
 
-        <Grid>
-          <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">Gender</FormLabel>
-            <RadioGroup
-              aria-label="Gender"
-              name="gender1"
-              className={classes.group}
-              onChange={(value) => _handleChange({ type: GENDER, value })}
-            >
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
-            </RadioGroup>
-          </FormControl>
+
+        <Grid direction="row" container item sm={12} alignItems="flex-start" spacing={2}>
+
+          
+          <Grid item sm={8}>
+        
+
+          <Grid direction="row" item sm={12}>
+            <Grid item sm={3}>Middle Name</Grid>
+
+          </Grid>
+          <Grid direction="row" item sm={12}>
+            <Grid item sm={3}>Last Name</Grid>
+            
+          </Grid>
+          <Grid direction="row" item sm={12}>
+            <Grid item sm={3}>Date of Birth</Grid>
+         
+
+          </Grid>
+
+          <Grid item sm={12}>
+            <FormControl component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend">Gender</FormLabel>
+              <RadioGroup
+                aria-label="Gender"
+                name="gender1"
+                className={classes.group}
+                onChange={(value) => _handleChange({ type: GENDER, value })}
+              >
+                <FormControlLabel value="female" control={<Radio />} label="Female" />
+                <FormControlLabel value="male" control={<Radio />} label="Male" />
+                <FormControlLabel value="other" control={<Radio />} label="Other" />
+              </RadioGroup>
+            </FormControl>
+
+          </Grid>
+          <Grid direction="row" item sm={12}>
+            <Grid item sm={3}> Nationality</Grid>
+            <Grid item sm={8}>
+              <TextField label="Nationality" margin="normal" fullWidth value={nationality} onChange={value => {
+                _handleChange({ type: NATIONALITY, value })
+              }} /></Grid>
+
+          </Grid>
 
         </Grid>
-        <Grid direction="row" item xs={3}>
-          <TextField label="Nationality" margin="normal" fullWidth value={nationality} onChange={value => {
-            _handleChange({ type: NATIONALITY, value })
-          }} />
-        </Grid>
-
-      </Grid>
-      <Grid direction="row" item xs={12}>
-        <Button variant="contained" color="primary" onClick={_onSave} className={classes.button}>
-          Save
+        <Grid direction="row" item sm={12}><Grid direction="row" item sm={3}></Grid>
+          <Grid direction="row" item sm={8}></Grid>
+          <Button variant="contained" color="primary" onClick={_onSave} className={classes.button}>
+            Save
       </Button>
-      </Grid>
-    </Box>)
+        </Grid>
+      </Box> */}
+    </>
+  )
 
 }
