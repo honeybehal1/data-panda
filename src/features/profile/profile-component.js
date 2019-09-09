@@ -7,6 +7,7 @@ import { Container, Col, Row } from 'react-bootstrap';
 
 import ContactInformation from '../../components/personal/contact-information-component'
 import AddressComponent from '../../components/address/address-component'
+import Experience from '../../components/experience/experience-component';
 
 class Profile extends React.Component {
     _getDataComponent = () => {
@@ -18,6 +19,8 @@ class Profile extends React.Component {
                 return <ContactInformation />
             case 'address':
                 return <AddressComponent />
+            case 'experience':
+                return <Experience/>
         }
     }
     render() {

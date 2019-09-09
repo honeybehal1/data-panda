@@ -36,7 +36,13 @@ let InitilaData = {
             icon: "work",
             primaryText: "Professional",
             isOpen: false,
-            type:'professional'        }
+            type:'professional',
+            subMenu: [{
+                icon: "",
+                primaryText: "Experience",
+                type: 'experience'
+            }]     
+        }
     ]
 };
 
