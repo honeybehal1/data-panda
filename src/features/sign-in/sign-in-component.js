@@ -1,7 +1,42 @@
-import {React,Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid,  Typography, Container} from '../../utils/general-imports'
+import {
+  React, Button, CssBaseline, TextField, FormControlLabel, Checkbox,
 
+  Link, Grid, Typography, withRouter, connect, concat, useState, Container, isEmpty, setLoggedInData
+} from '../../utils/general-imports'
+import { signIn } from "./sign-in-actions";
+import { isValidInput } from '../../utils/general-utils';
+function SignIn(props) {
 
-export default function SignIn() {
+  const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const _setData = (data) => {
+    let { type, value } = data;
+    value = value.currentTarget.value;
+    setLoginData({ ...loginData, [type]: value });
+  }
+  const _handleSignIn = () => {
+    const { email, password } = loginData;
+    const user = { email, password };
+    let isPasswordEqual = !isEmpty(password);
+    let errorMessage = [];
+
+    let isFormValid = true;
+    if (!isPasswordEqual) {
+      isFormValid = false;
+      errorMessage = concat(errorMessage, "Password doesn't match");
+    }
+    if (!isValidInput(email).isValid) {
+      isFormValid = false;
+      errorMessage = concat(errorMessage, isValidInput(email).errorMessage);
+    }
+    // this.setState({ errorMessage: join(errorMessage, ','), isFormValid });
+    isFormValid && props.signIn(user).then(data => {
+      const isValid = setLoggedInData(data);
+      if (isValid) {
+        props.history.push('/profile');
+      }
+    });
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -9,7 +44,7 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form  noValidate>
+        <form noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -20,6 +55,9 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={loginData.email}
+            onChange={value => _setData({ type: "email", value })}
+
           />
           <TextField
             variant="outlined"
@@ -31,17 +69,19 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={loginData.password}
+
+            onChange={value => _setData({ type: "password", value })}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
-           
+            onClick={() => _handleSignIn()}
           >
             Sign In
           </Button>
@@ -63,4 +103,19 @@ export default function SignIn() {
     </Container>
   );
 }
+
+const mapStateToProps = (state) => ({
+  isUserLoggedIn: state.signUpReducer.get('isUserLoggedIn')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  signIn: data => signIn(dispatch, data)
+});
+
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignIn));
 

@@ -1,6 +1,7 @@
-import { React, postData, FormControl, FormLabel, useState } from '../../utils/general-imports';
+import { React, postData, useState, useEffect, connect, withRouter } from '../../utils/general-imports';
 import { INPUT_TYPE } from '../../utils/constants';
 import { Container, Col, Row, Form, Button, ButtonGroup } from 'react-bootstrap';
+import { getPersonalData } from "./personal-actions";
 const {
   FIRST_NAME,
   MIDDLE_NAME,
@@ -9,7 +10,8 @@ const {
   GENDER,
   NATIONALITY
 } = INPUT_TYPE;
-export default function Personal() {
+
+function Personal(props) {
 
   const classes = {};
 
@@ -22,6 +24,13 @@ export default function Personal() {
   const _onSave = () => {
     postData(userData, 'userBasicInformation');
   }
+  useEffect(() => {
+    console.log("init loading");
+    props.getPersonalData('userBasicInformation/get')
+    return () => {
+
+    };
+  }, [])
 
   const { firstName = '',
     middleName = '',
@@ -153,3 +162,19 @@ export default function Personal() {
   )
 
 }
+
+const mapStateToProps = (state) => ({
+  isUserLoggedIn: state.signUpReducer.get('isUserLoggedIn')
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getPersonalData: data => getPersonalData(dispatch, data)
+});
+
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Personal));
+

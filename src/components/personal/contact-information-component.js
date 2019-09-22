@@ -84,9 +84,6 @@ export default function ContactInformation() {
         </Col>
       </Row>
     </div>
-
-
-
   )
 
 }

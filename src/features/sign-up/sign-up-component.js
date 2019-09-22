@@ -1,4 +1,4 @@
-import { React, Grid, connect, withRouter, TextField, translate, isEqual, isEmpty, map, concat, join } from '../../utils/general-imports';
+import { React, Grid, connect, withRouter, TextField, translate, isEqual, isEmpty, map, concat, join, setLoggedInData } from '../../utils/general-imports';
 import { isValidInput } from '../../utils/general-utils';
 import { MessageComponent } from '../../utils/general-components';
 
@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import { INPUT_TYPE } from '../../utils/constants';
-import { I18n, Translate } from 'react-redux-i18n';
+
 
 
 
@@ -30,7 +30,7 @@ class SignUp extends React.Component {
   }
 
   _handleSignUp() {
-    const { email, password, confirmPassword } = this.state;
+    const { email, password, confirmPassword = '' } = this.state;
     const user = { email, password };
     let isPasswordEqual = !isEmpty(password) && isEqual(password, confirmPassword);
     let errorMessage = [];
@@ -45,9 +45,9 @@ class SignUp extends React.Component {
       errorMessage = concat(errorMessage, isValidInput(email).errorMessage);
     }
     this.setState({ errorMessage: join(errorMessage, ','), isFormValid });
-    isFormValid && this.props.signUp(user).then(() => {
-      let { isUserLoggedIn = false } = this.props;
-      if (isUserLoggedIn) {
+    isFormValid && this.props.signUp(user).then(data => {
+      const isValid = setLoggedInData(data);
+      if (isValid) {
         this.props.history.push('/profile');
       }
     });

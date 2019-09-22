@@ -5,10 +5,10 @@ import { store } from '../index';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    let isLogin = true;
+    const token = localStorage.getItem('authorization');
     return (
         <Route exact {...rest} render={props => (
-            isLogin ?
+            token ?
                 <Component {...props} />
                 : <Redirect exact to="/" />
         )} />

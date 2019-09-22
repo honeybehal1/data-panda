@@ -29,7 +29,7 @@ import { translate } from '../utils/global/translate-utils';
 
 //http
 
-import { getData, postData } from './http';
+import { getData, postData, setLoggedInData } from './http';
 
 export {
     React,
@@ -64,7 +64,8 @@ export {
     Autosuggest,
     useReducer,
     useState,
-    useEffect
+    useEffect,
+    setLoggedInData
 };
 
 
