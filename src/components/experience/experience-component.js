@@ -90,7 +90,7 @@ export default function Experience() {
             </Row>
             <Row>
                 <Col sm={3}>
-                    Description
+                <Form.Label>Description</Form.Label>
                 </Col>
                 <Col sm={8}>
                     <Form.Control
