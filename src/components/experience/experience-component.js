@@ -8,7 +8,15 @@ const {
     LOCATION,
     START_DATE,
     HEADLINE,
-    DESCRIPTION
+    DESCRIPTION,
+    EMPLOYEE_ID,
+    MANAGER_CONTACT_NO,
+    CTC,
+    JOINING_POSITION,
+    HR_EMAIL,
+    SALARY_SLIP,
+    JOINING_LETTER,
+    HIKE_LETTER
  } = INPUT_TYPE;
 
 export default function Experience() {
@@ -21,7 +29,15 @@ export default function Experience() {
         location = '',
         startDate = '',
         headline = '',
-        description = ''} = userData;
+        description = '',
+        employeeId = '',
+        managerContactNo = '',
+        ctc = '',
+        joiningPosition = '',
+        hrEmail = '',
+        salarySlip = '',
+        joiningLetter = '',
+        hikeLetter = ''} = userData;
 
     const _handleChange = data => {
         let {type, value} = data;
@@ -35,6 +51,17 @@ export default function Experience() {
             </h2>
             <Row>
                 <Col sm={3}>
+                    <Form.Label>Company</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control 
+                        type="text" 
+                        value={company}
+                        onChange={value => {_handleChange({type: COMPANY, value})}}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
                     <Form.Label>Position</Form.Label>
                 </Col>
                 <Col sm={8}>
@@ -46,13 +73,13 @@ export default function Experience() {
             </Row>
             <Row>
                 <Col sm={3}>
-                    <Form.Label>Company</Form.Label>
+                    <Form.Label>Joining Position</Form.Label>
                 </Col>
                 <Col sm={8}>
                     <Form.Control 
                         type="text" 
-                        value={company}
-                        onChange={value => {_handleChange({type: COMPANY, value})}}></Form.Control>
+                        value={joiningPosition}
+                        onChange={value => {_handleChange({type: JOINING_POSITION, value})}}></Form.Control>
                 </Col>
             </Row>
             <Row>
@@ -75,6 +102,84 @@ export default function Experience() {
                         type="date"
                         value={startDate}
                         onChange={value => _handleChange({type: START_DATE, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Employee Id</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="text"
+                        value={employeeId}
+                        onChange={value => _handleChange({type: EMPLOYEE_ID, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Manager Contact No.</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="text"
+                        value={managerContactNo}
+                        onChange={value => _handleChange({type: MANAGER_CONTACT_NO, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>HR Email</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="email"
+                        value={hrEmail}
+                        onChange={value => _handleChange({type: HR_EMAIL, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>CTC</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="text"
+                        value={ctc}
+                        onChange={value => _handleChange({type: CTC, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Salary Slip</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="file"
+                        multiple
+                        value={salarySlip}
+                        onChange={value => _handleChange({type: SALARY_SLIP, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Joining Letter</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="file"
+                        value={joiningLetter}
+                        onChange={value => _handleChange({type: JOINING_LETTER, value})}></Form.Control>
+                </Col>
+            </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Hike Letter</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        type="file"
+                        value={hikeLetter}
+                        onChange={value => _handleChange({type: HIKE_LETTER, value})}></Form.Control>
                 </Col>
             </Row>
             <Row>

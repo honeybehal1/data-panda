@@ -38,7 +38,7 @@ let InitilaData = {
             isOpen: false,
             type:'professional',
             subMenu: [{
-                icon: "",
+                icon: "add_to_queue",
                 primaryText: "Experience",
                 type: 'experience'
             }]     
