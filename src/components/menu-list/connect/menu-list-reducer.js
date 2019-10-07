@@ -1,6 +1,7 @@
 import { isEqual, Immutable } from '../../../utils/general-imports';
 let InitilaData = {
     menuTypeSelected: 'basic',
+    menuId: 0,
     leftMenuData: [
         {
             icon: "face",
@@ -40,7 +41,12 @@ let InitilaData = {
             subMenu: [{
                 icon: "add_to_queue",
                 primaryText: "Experience",
-                type: 'experience'
+                type: 'experience',
+                id: 0
+            },{
+                icon: "add_circle",
+                primaryText: "Add Company",
+                type: 'add_experience'
             }]     
         }
     ]
@@ -54,6 +60,8 @@ export default function menuListReducer(state = InitilaData, action) {
           return state.set('leftMenuData', data );
           case 'SUB_MENU_TYPE':           
           return state.set('menuTypeSelected', data );
+          case 'MENU-ID':
+          return state.set('menuId', data);
         default:
             return state;
     }

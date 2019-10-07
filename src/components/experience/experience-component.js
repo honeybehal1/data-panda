@@ -1,4 +1,4 @@
-import { React, useState } from '../../utils/general-imports';
+import { React, useState, useEffect } from '../../utils/general-imports';
 import { Row, Col, Form } from 'react-bootstrap';
 import {INPUT_TYPE} from '../../utils/constants';
 
@@ -19,13 +19,17 @@ const {
     HIKE_LETTER
  } = INPUT_TYPE;
 
-export default function Experience() {
+export default function Experience(props) {
+    let id = null;
+    const [ userData, setUserData, ] = useState({});
 
-    const [ userData, setUserData ] = useState({});
+    useEffect(() => {
+        id = props.id;
+    });
 
     const {
         position = '',
-        company = '',  
+        company = '',
         location = '',
         startDate = '',
         headline = '',
@@ -42,12 +46,12 @@ export default function Experience() {
     const _handleChange = data => {
         let {type, value} = data;
         value = value.currentTarget.value;
-        setUserData({...userData, [type]: value });
+        setUserData({...userData, [type]: value, id: id });
     }
     return(
         <div className="dp-form-container">
             <h2 className="dp-section-header">
-                Experience
+                {company || 'Experience'}
             </h2>
             <Row>
                 <Col sm={3}>
