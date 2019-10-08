@@ -21,7 +21,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/core/styles';
 
 //lodash
-import { map, size, isEmpty, isEqual, result, join, isArray, concat } from 'lodash';
+import { map, size, isEmpty, isEqual, result, join, isArray, concat, find} from 'lodash';
 
 //Components
 import ErrorBoundary from '../components/error-boundary-component';
@@ -77,4 +77,4 @@ export {
 export { makeStyles };
 
 //export lodash
-export { map, size, isEmpty, isEqual, result, join, isArray, concat };
+export { map, size, isEmpty, isEqual, result, join, isArray, concat, find };

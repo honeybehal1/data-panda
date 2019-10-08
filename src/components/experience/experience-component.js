@@ -1,6 +1,7 @@
-import { React, useState, useEffect } from '../../utils/general-imports';
+import { React, useState, useEffect, connect, result} from '../../utils/general-imports';
 import { Row, Col, Form } from 'react-bootstrap';
 import {INPUT_TYPE} from '../../utils/constants';
+import { withRouter } from "react-router-dom";
 
 const { 
     POSITION,
@@ -19,15 +20,40 @@ const {
     HIKE_LETTER
  } = INPUT_TYPE;
 
-export default function Experience(props) {
+export function Experience(props) {
     let id = null;
-    const [ userData, setUserData, ] = useState({});
+    const [ userData, setUserData ] = useState({});
+    id = props.id;
+    userData.id = id;
+    let exp =  result(props.userExperience, 'toJS', []);
+    const index =  exp.findIndex(input => input.id === id);
+    if(index >= 0) {
+        setUserData(Object.assign(userData, exp[index]));
 
-    useEffect(() => {
-        id = props.id;
-    });
+    }else if(exp.length > 0 && index < 0){
+        setUserData(
+        Object.assign(userData, {
+            position : '',
+            company : '',
+            location : '',
+            startDate : '',
+            headline : '',
+            description : '',
+            employeeId : '',
+            managerContactNo : '',
+            ctc : '',
+            joiningPosition : '',
+            hrEmail : '',
+            salarySlip : '',
+            joiningLetter : '',
+            hikeLetter : ''}));
+    }
+    //useEffect(() => {
+        
+    //});
 
-    const {
+
+    let {
         position = '',
         company = '',
         location = '',
@@ -46,8 +72,13 @@ export default function Experience(props) {
     const _handleChange = data => {
         let {type, value} = data;
         value = value.currentTarget.value;
-        setUserData({...userData, [type]: value, id: id });
+        setUserData({...userData, [type]: value, id });
     }
+    const saveData = () => {
+       let exp =  result(props.userExperience, 'toJS', []);
+       
+       props.setExperienceData([...exp, userData]);
+    };
     return(
         <div className="dp-form-container">
             <h2 className="dp-section-header">
@@ -208,6 +239,34 @@ export default function Experience(props) {
                         onChange={value => _handleChange({type: DESCRIPTION, value})}></Form.Control>
                 </Col>
             </Row>
+            <Row>
+                <Col sm={3}>
+                <Form.Label>Save</Form.Label>
+                </Col>
+                <Col sm={8}>
+                    <Form.Control
+                        as="button"
+                        value={'save'}
+                        onClick={saveData}></Form.Control>
+                </Col>
+            </Row>
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+
+    return {
+        userExperience: state.experienceReducer.get('userExperience')
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    setExperienceData: data => dispatch({type: 'EXPERIENCE_ADDED', data: data})
+});
+
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(Experience));

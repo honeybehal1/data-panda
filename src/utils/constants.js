@@ -26,5 +26,14 @@ export const INPUT_TYPE = {
     LOCATION: 'location',
     START_DATE: 'startDate',
     HEADLINE: 'headline',
-    DESCRIPTION: 'description'
+    DESCRIPTION: 'description',
+    POSITION: 'position',
+    EMPLOYEE_ID: 'employeeId',
+    MANAGER_CONTACT_NO: 'managerContactNo',
+    CTC: 'ctc',
+    JOINING_POSITION: 'joiningPosition',
+    HR_EMAIL: 'hrEmail',
+    SALARY_SLIP: 'salarySlip',
+    JOINING_LETTER: 'joiningLetter',
+    HIKE_LETTER: 'hikeLetter'
 }
