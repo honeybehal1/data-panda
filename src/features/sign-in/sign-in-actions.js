@@ -7,3 +7,6 @@ export function signIn(dispatch, signUp) {
         return data;
     });
 }
+export function setValue(dispatch, type, data) {
+    dispatch({ [type]: data });
+}

@@ -3,7 +3,7 @@ import {
 
   Link, Grid, Typography, withRouter, connect, concat, useState, Container, isEmpty, setLoggedInData
 } from '../../utils/general-imports'
-import { signIn } from "./sign-in-actions";
+import { signIn, setValue } from "./sign-in-actions";
 import { isValidInput } from '../../utils/general-utils';
 function SignIn(props) {
 
@@ -32,6 +32,7 @@ function SignIn(props) {
     isFormValid && props.signIn(user).then(data => {
       const isValid = setLoggedInData(data);
       if (isValid) {
+        setValue('SIGN_IN_RESPONDED', true)
         props.history.push('/profile');
       }
     });
@@ -109,7 +110,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  signIn: data => signIn(dispatch, data)
+  signIn: data => signIn(dispatch, data),
+  setValue: (type, data) => { setValue(dispatch, type, data) }
 });
 
 

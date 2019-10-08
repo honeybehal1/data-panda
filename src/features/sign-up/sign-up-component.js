@@ -61,9 +61,9 @@ class SignUp extends React.Component {
     const { email, password, confirmPassword, errorMessage = '', isFormValid } = this.state;
 
     return (
-      <Container component="main" maxWidth="xs">
+      <Container >
         <div>
-          <CssBaseline />
+
           {!isFormValid ? (<MessageComponent props={{ message: `${errorMessage}`, variant: 'error', handleClose: this._handleClose }} />) : ''}
           <div >
             <Typography component="h1" variant="h5">
