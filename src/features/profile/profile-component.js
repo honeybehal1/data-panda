@@ -1,4 +1,4 @@
-import { React, Grid, Box, connect, withRouter } from '../../utils/general-imports';
+import { React, Grid, Box, connect, withRouter, result } from '../../utils/general-imports';
 
 import MenuList from '../../components/menu-list/menu-list-component';
 import Personal from '../../components/personal/personal-component';
@@ -7,10 +7,13 @@ import { Container, Col, Row } from 'react-bootstrap';
 
 import ContactInformation from '../../components/personal/contact-information-component'
 import AddressComponent from '../../components/address/address-component'
+import Experience from '../../components/experience/experience-component';
 
 class Profile extends React.Component {
     _getDataComponent = () => {
         const { menuTypeSelected } = this.props;
+        let { leftMenuData } = this.props;
+        leftMenuData = result(leftMenuData, 'toJS', []);
         switch (menuTypeSelected) {
             case 'basic':
                 return <Personal />
@@ -18,6 +21,8 @@ class Profile extends React.Component {
                 return <ContactInformation />
             case 'address':
                 return <AddressComponent />
+            case 'experience':
+                return <Experience id={this.props.menuId}/>
         }
     }
     render() {
@@ -39,7 +44,9 @@ class Profile extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    menuTypeSelected: state.menuListReducer.get('menuTypeSelected')
+    menuTypeSelected: state.menuListReducer.get('menuTypeSelected'),
+    leftMenuData: state.menuListReducer.get('leftMenuData'),
+    menuId: state.menuListReducer.get('menuId')
 });
 
 
