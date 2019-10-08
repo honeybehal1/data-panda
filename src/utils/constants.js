@@ -20,5 +20,11 @@ export const INPUT_TYPE = {
     HOUSE_NUMBER: 'houseNumber',
     STREET_NUMBER: 'streetNumber',
     AREA_NAME: 'areaName',
-    LAND_MARK: 'landMark'
+    LAND_MARK: 'landMark',
+    TITLE: 'title',
+    COMPANY: 'company',
+    LOCATION: 'location',
+    START_DATE: 'startDate',
+    HEADLINE: 'headline',
+    DESCRIPTION: 'description'
 }

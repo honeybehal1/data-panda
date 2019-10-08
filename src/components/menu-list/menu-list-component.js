@@ -21,23 +21,42 @@ class MenuList extends React.Component {
     handleClick = item => {
         let { leftMenuData } = this.props;
         leftMenuData = result(leftMenuData, 'toJS', []);
-        const { type = '', index,
+        const { type = '', index, id,
             subMenuItemType } = item;
         if (!isEmpty(type)) {
-            leftMenuData[index]['isOpen'] = !leftMenuData[index]['isOpen'];
+            // leftMenuData[index]['isOpen'] = !leftMenuData[index]['isOpen'];
+            leftMenuData = leftMenuData.map((item,idx) => {
+                if(idx !== index) {
+                 item.isOpen = false;
+                    return item;
+                }else{
+                     item.isOpen = !item.isOpen;
+                        return item;
+                }
+            });
             this.props.setData(leftMenuData);
+            this.props.setSubMenuType(leftMenuData[index].subMenu[0].type);
         }
         if (!isEmpty(subMenuItemType)) {
-            this.props.setSubMenuType(subMenuItemType);
+            if(subMenuItemType === 'add_experience') {
+                const expCopy =JSON.parse(JSON.stringify(leftMenuData[2].subMenu.slice(-2,-1)[0]));
+                expCopy.id++;
+                leftMenuData[2].subMenu.splice(-1,0,expCopy);
+                this.props.setData(leftMenuData);
+                this.props.setSubMenuType('experience');
+            }else {
+                this.props.setSubMenuType(subMenuItemType);
+                this.props.setMenuId(id);
+            }
         }
     }
 
 
     getMenuItem = data => {
-        const { index, listItem, type, subMenuItemType } = data
-        const { icon = '', primaryText, subMenu = [], isOpen = false } = listItem;
+        const { index, listItem, type, subMenuItemType, } = data
+        const { icon = '', id, primaryText, subMenu = [], isOpen = false } = listItem;
         return (
-            <div><ListItem button onClick={() => this.handleClick({ index, type, subMenuItemType })
+            <div><ListItem button onClick={() => this.handleClick({ index, type, subMenuItemType, id })
             }><ListItemIcon>
                     <i class="material-icons" > {icon} </i>
                 </ListItemIcon>
@@ -95,8 +114,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
     setData: id => dispatch(setMenu(id)),
-    setSubMenuType: subMenuType => dispatch({ type: 'SUB_MENU_TYPE', data: subMenuType })
-
+    setSubMenuType: subMenuType => dispatch({ type: 'SUB_MENU_TYPE', data: subMenuType }),
+    setMenuId: id => dispatch({type: 'MENU-ID', data: id})
 });
 
 
