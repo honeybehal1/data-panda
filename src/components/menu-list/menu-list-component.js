@@ -25,32 +25,29 @@ class MenuList extends React.Component {
             subMenuItemType } = item;
         if (!isEmpty(type)) {
             // leftMenuData[index]['isOpen'] = !leftMenuData[index]['isOpen'];
-            leftMenuData = leftMenuData.map((item,idx) => {
-                if(idx !== index) {
-                 item.isOpen = false;
+            leftMenuData = leftMenuData.map((item, idx) => {
+                if (idx !== index) {
+                    item.isOpen = false;
                     return item;
-                }else{
-                     item.isOpen = !item.isOpen;
-                        return item;
+                } else {
+                    item.isOpen = !item.isOpen;
+                    return item;
                 }
             });
             this.props.setData(leftMenuData);
             this.props.setSubMenuType(leftMenuData[index].subMenu[0].type);
         }
         if (!isEmpty(subMenuItemType)) {
-            if(subMenuItemType === 'add_experience') {
-                const expCopy =JSON.parse(JSON.stringify(leftMenuData[2].subMenu.slice(-2,-1)[0]));
-                expCopy.id++;
-                leftMenuData[2].subMenu.splice(-1,0,expCopy);
+            if (subMenuItemType === 'add_experience') {
                 this.props.setData(leftMenuData);
                 this.props.setSubMenuType('experience');
-            }else {
+                this.props.setMenuId(-1);
+            } else {
                 this.props.setSubMenuType(subMenuItemType);
-                this.props.setMenuId(id);
+                this.props.setMenuId(index);
             }
         }
     }
-
 
     getMenuItem = data => {
         const { index, listItem, type, subMenuItemType, } = data
@@ -81,7 +78,7 @@ class MenuList extends React.Component {
                     size(subMenu) > 0 &&
                     <Collapse in={isOpen} timeout="auto" unmountOnExit style={{ paddingLeft: "1rem" }
                     }>
-                        {map(subMenu, (subMenuItem) => { return this.getMenuItem({ listItem: subMenuItem, subMenuItemType: subMenuItem.type }) })
+                        {map(subMenu, (subMenuItem, subMenuIndex) => { return this.getMenuItem({ listItem: subMenuItem, subMenuItemType: subMenuItem.type, index: subMenuIndex }) })
                         }
                     </Collapse>}
             </div>);
@@ -115,7 +112,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
     setData: id => dispatch(setMenu(id)),
     setSubMenuType: subMenuType => dispatch({ type: 'SUB_MENU_TYPE', data: subMenuType }),
-    setMenuId: id => dispatch({type: 'MENU-ID', data: id})
+    setMenuId: id => dispatch({ type: 'MENU-ID', data: id })
 });
 
 
