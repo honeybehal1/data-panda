@@ -28,6 +28,23 @@ const leftMenu = {
     id: 0
 }
 
+const initialData = {
+    position: '',
+    company: '',
+    location: '',
+    startDate: '',
+    headline: '',
+    description: '',
+    employeeId: '',
+    managerContactNo: '',
+    ctc: '',
+    joiningPosition: '',
+    hrEmail: '',
+    salarySlip: '',
+    joiningLetter: '',
+    hikeLetter: ''
+}
+
 export function Experience(props) {
     let id = null;
     const [userData, setUserData] = useState({});
@@ -40,28 +57,9 @@ export function Experience(props) {
         userData.id = id;
         let exp = result(props.userExperience, 'toJS', []);
         if (id >= 0) {
-
-            setUserData(Object.assign(userData, exp[id]));
+            setUserData(Object.assign(initialData, exp[id]));
         } else if (exp.length > 0 && id < 0) {
-            setUserData(
-                {
-                    userData, ...{
-                        position: '',
-                        company: '',
-                        location: '',
-                        startDate: '',
-                        headline: '',
-                        description: '',
-                        employeeId: '',
-                        managerContactNo: '',
-                        ctc: '',
-                        joiningPosition: '',
-                        hrEmail: '',
-                        salarySlip: '',
-                        joiningLetter: '',
-                        hikeLetter: ''
-                    }
-                });
+            setUserData({ ...initialData });
         }
     }
 
