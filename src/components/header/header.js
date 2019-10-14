@@ -1,11 +1,5 @@
-import { React, connect, withRouter, isEqual, Redirect, Link } from '../../utils/general-imports';
-import AppBar from '@material-ui/core/AppBar';
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import Typography from '@material-ui/core/Typography';
-
-import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar } from '@material-ui/core';
+import { React, connect, withRouter, isEqual, Redirect, Link, setLoggedInData } from '../../utils/general-imports';
+import { signOut } from './connect/header-actions';
 
 
 
@@ -16,7 +10,8 @@ class Header extends React.Component {
     const { isUserLoggedIn } = this.props;
     let location = this.props.location.pathname;
     let linkText = '';
-    let routeLink = ''
+    let routeLink = '';
+    debugger;
     if (isEqual(location, '/') || isEqual(location, '/signIn')) {
       linkText = 'Sign Up';
       routeLink = 'signUp'
@@ -25,7 +20,14 @@ class Header extends React.Component {
       linkText = 'Sign In';
       routeLink = 'signIn';
     }
-    return isUserLoggedIn ? '' : (<Link to={routeLink}>{linkText}</Link>);
+    return isUserLoggedIn ? (<div onClick={() => this._signOut()}>Sign Out</div>
+    ) : (<Link to={routeLink}>{linkText}</Link>);
+  }
+
+  _signOut = () => {
+    this.props.signOut().then((data) => {
+      setLoggedInData(data)
+    });
   }
 
   render() {
@@ -45,11 +47,11 @@ const mapStateToProps = (state) => ({
   isUserLoggedIn: state.signUpReducer.get('isUserLoggedIn')
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   signUp: data => changePage(dispatch, data)
-// });
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => signOut(dispatch, {})
+});
 
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
 
 

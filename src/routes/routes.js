@@ -1,4 +1,4 @@
-import { React, Route, Router, Switch, } from '../utils/general-imports';
+import { React, Route, Router, Switch, withRouter, connect } from '../utils/general-imports';
 import PrivateRoute from './private-router';
 
 
@@ -12,10 +12,10 @@ class Routes extends React.Component {
 
             <Switch>
                 <Route exact path="/home" component={Dashboard} />
-                <Route exact path="/profile" component={Profile} />
+                <PrivateRoute exact path="/profile" component={Profile} />
                 <Route exact path="/signUp" component={SignUp} />
                 <Route exact path="/signIn" component={SignIn} />
-                <Route exact path="/" component={SignIn} />
+                <Route exact path="/" component={this.props.isUserLoggedIn ? SignIn : Profile} />
             </Switch>
 
 
@@ -23,7 +23,15 @@ class Routes extends React.Component {
     }
 
 };
+const mapStateToProps = (state) => ({
+    isUserLoggedIn: state.signUpReducer.get('isUserLoggedIn')
+});
 
-export default Routes;
+export default withRouter(
+    connect(
+        mapStateToProps,
+
+    )(Routes));
+
 
 

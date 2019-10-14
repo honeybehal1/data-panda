@@ -8,13 +8,13 @@ let InitilaData = {
 };
 
 InitilaData = Immutable.fromJS(InitilaData)
-export default function signUpReducer(state = InitilaData, action) {
+export default function personalDataReducer(state = InitilaData, action) {
     const data = Immutable.fromJS(action.data);
     switch (action.type) {
-        case 'LOG_OUT_REQUESTED':
-            return data.set('signUpRequested', data);
-        case 'SIGN_UP_RESPONDED':
-            return data.set('isUserLoggedIn', true);
+        case 'PERSONAL_DATA_SAVED':
+            return state.set('pesonalBasicIformation', data);
+        case 'PERSOBNAL_DATA_FETCHED':
+            return state.set('pesonalBasicIformation', data);
     }
     return state;
 }

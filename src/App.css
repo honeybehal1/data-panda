@@ -36,3 +36,7 @@
     font-size: 2rem;
     font-style: italic;
 }
+
+.app-body-container {
+    margin-top: 96px
+}

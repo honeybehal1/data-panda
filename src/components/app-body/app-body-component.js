@@ -20,8 +20,11 @@ class AppBody extends React.Component {
 
         <Router>
           <Header />
+          <div class="app-body-container">
+            <Routes />
+          </div>
 
-          <Routes />
+
 
         </Router>
 
