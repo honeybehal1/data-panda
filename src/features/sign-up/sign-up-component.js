@@ -1,4 +1,4 @@
-import { React, Grid, connect, withRouter, TextField, translate, isEqual, isEmpty, map, concat, join } from '../../utils/general-imports';
+import { React, Grid, connect, withRouter, TextField, translate, isEqual, isEmpty, map, concat, join, setLoggedInData } from '../../utils/general-imports';
 import { isValidInput } from '../../utils/general-utils';
 import { MessageComponent } from '../../utils/general-components';
 
@@ -45,7 +45,8 @@ class SignUp extends React.Component {
       errorMessage = concat(errorMessage, isValidInput(email).errorMessage);
     }
     this.setState({ errorMessage: join(errorMessage, ','), isFormValid });
-    isFormValid && this.props.signUp(user).then(() => {
+    isFormValid && this.props.signUp(user).then(data => {
+      const isValid = setLoggedInData(data);
       let { isUserLoggedIn = false } = this.props;
       if (isUserLoggedIn) {
         this.props.history.push('/profile');

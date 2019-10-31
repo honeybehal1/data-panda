@@ -19,6 +19,7 @@ import {
 
 class MenuList extends React.Component {
     handleClick = item => {
+        debugger;
         let { leftMenuData } = this.props;
         leftMenuData = result(leftMenuData, 'toJS', []);
         const { type = '', index, id,

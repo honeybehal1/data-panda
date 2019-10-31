@@ -29,7 +29,7 @@ function Personal(props) {
     };
   }, []);
 
-  const saveBasicInformation = () => {
+  const saveBasicInformation = (userData) => {
     props.saveBasicInformation(userData)
   }
 

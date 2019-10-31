@@ -20,6 +20,7 @@ class Header extends React.Component {
       linkText = 'Sign In';
       routeLink = 'signIn';
     }
+
     return isUserLoggedIn ? (<div onClick={() => this._signOut()}>Sign Out</div>
     ) : (<Link to={routeLink}>{linkText}</Link>);
   }

@@ -15,7 +15,7 @@ export function postData(body, url) {
     method: 'post',
     body: JSON.stringify(body),
     headers: {
-      'authorization': token,
+      'authorization': localStorage.getItem('authorization'),
       'Content-Type': 'application/json'
     }
   }).then(function (response) {

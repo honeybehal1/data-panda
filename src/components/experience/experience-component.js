@@ -90,7 +90,7 @@ export function Experience(props) {
         let { leftMenuData } = props;
         leftMenuData = result(leftMenuData, 'toJS', []);
         leftMenuData[2].subMenu.unshift({ ...leftMenu, primaryText: company })
-        props.setData({ ...leftMenuData })
+        props.setData([...leftMenuData])
         props.setExperienceData([...exp, userData]);
     };
     return (
